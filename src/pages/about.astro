@@ -1,15 +1,44 @@
 ---
+import { Code, Blocks, Palette, Database, Rocket, Terminal } from "@lucide/astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { siteConfig } from "../site.config";
+import { withBase } from "../lib/url";
+
+const uses = [
+  { category: "Languages", items: "TypeScript, JavaScript", icon: Code },
+  { category: "Frameworks", items: "Astro, React", icon: Blocks },
+  { category: "Styling", items: "Tailwind CSS", icon: Palette },
+  { category: "Backend", items: "Supabase", icon: Database },
+  { category: "Deploy", items: "GitHub Actions, GitHub Pages", icon: Rocket },
+  { category: "Editor", items: "VS Code", icon: Terminal },
+];
 ---
 
 <BaseLayout title="About">
   <section class="mx-auto max-w-3xl px-4 py-16">
-    <h1 class="text-2xl font-bold text-fg">About {siteConfig.name}</h1>
+    <h1 class="text-2xl font-bold text-fg">About</h1>
     <p class="mt-4 text-fg-muted">
-      This is an example page. Edit <code>src/pages/about.astro</code> directly, or replace this
-      section with content pulled from a Markdown collection if you'd rather manage it the same
-      way as blog posts.
+      I'm Prajwal. I build small, useful things and put most of them on GitHub Pages. This site
+      is the hub for that: a running index of projects, a blog for writing things down, and the
+      home base for anything new I ship.
     </p>
+    <p class="mt-4 text-fg-muted">
+      Most of what I build shares the same shape: a focused tool that does one job well, shipped
+      as a static site with no server to babysit. <a href={withBase("/projects")} class="text-brand underline underline-offset-2">See the full list</a>.
+    </p>
+
+    <h2 class="mt-12 text-lg font-semibold text-fg">Uses</h2>
+    <dl class="mt-4 divide-y divide-border border-t border-border">
+      {
+        uses.map(({ category, items, icon: Icon }) => (
+          <div class="flex flex-col gap-1 py-3 sm:flex-row sm:items-center sm:gap-4">
+            <dt class="flex w-40 shrink-0 items-center gap-2 text-sm font-medium text-fg">
+              <Icon class="size-4 text-brand" aria-hidden="true" />
+              {category}
+            </dt>
+            <dd class="text-sm text-fg-muted">{items}</dd>
+          </div>
+        ))
+      }
+    </dl>
   </section>
 </BaseLayout>

@@ -3,6 +3,7 @@ import { Menu, X } from "@lucide/astro";
 import { siteConfig } from "../site.config";
 import { withBase } from "../lib/url";
 import ThemeToggle from "./ThemeToggle.astro";
+import Github from "./icons/Github.astro";
 ---
 
 <header
@@ -26,6 +27,20 @@ import ThemeToggle from "./ThemeToggle.astro";
     </nav>
 
     <div class="flex items-center gap-1">
+      {
+        siteConfig.social.github && (
+          <a
+            href={siteConfig.social.github}
+            class="inline-flex min-h-11 min-w-11 items-center justify-center text-fg-muted hover:text-fg"
+            aria-label="GitHub"
+            title="GitHub"
+            rel="me noopener noreferrer"
+            target="_blank"
+          >
+            <Github class="size-5" aria-hidden="true" />
+          </a>
+        )
+      }
       <ThemeToggle />
 
       <button

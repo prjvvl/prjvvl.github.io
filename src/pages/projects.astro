@@ -1,0 +1,48 @@
+---
+import { Star, Clock } from "@lucide/astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/Card.astro";
+import { projects } from "../data/projects";
+import { getRepoStats } from "../lib/github";
+
+const cards = await Promise.all(
+  projects.map(async (project) => ({
+    project,
+    stats: project.repo ? await getRepoStats(project.repo) : null,
+  })),
+);
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", { month: "short", year: "numeric" });
+---
+
+<BaseLayout title="Projects">
+  <section class="mx-auto max-w-5xl px-4 py-16">
+    <h1 class="text-2xl font-bold text-fg">Projects</h1>
+    <p class="mt-4 text-fg-muted">Things I've built, each living in its own repo and its own corner of this domain.</p>
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+      {
+        cards.map(({ project, stats }) => {
+          const Icon = project.icon;
+          return (
+          <Card title={project.title} description={project.description} href={project.href}>
+            <Icon slot="icon" class="size-5 text-brand" aria-hidden="true" />
+            {stats && (
+              <div class="mt-4 flex items-center gap-4 text-xs text-fg-muted">
+                <span class="flex items-center gap-1">
+                  <Star class="size-3.5" aria-hidden="true" />
+                  {stats.stars}
+                </span>
+                <span class="flex items-center gap-1">
+                  <Clock class="size-3.5" aria-hidden="true" />
+                  Updated {dateFormatter.format(new Date(stats.updatedAt))}
+                </span>
+              </div>
+            )}
+          </Card>
+          );
+        })
+      }
+    </div>
+  </section>
+</BaseLayout>

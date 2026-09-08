@@ -4,8 +4,8 @@
  * Tailwind v4's config is CSS-first, so tokens stay there, not here.
  */
 export const siteConfig = {
-  name: "Trestle",
-  description: "A GitHub Pages site-building kit that ships with deploy, SEO, and content already wired up.",
+  name: "Prajwal Jadhav",
+  description: "Projects, writing, and things I build.",
 
   /** Set this to your custom domain (e.g. "example.com") to enable one.
    *  Leave empty to use the default <user>.github.io/<repo> URL.
@@ -13,16 +13,19 @@ export const siteConfig = {
   domain: "",
 
   /** Fallback base URL used when `domain` is empty. Update the path to match your repo name. */
-  url: "https://your-username.github.io/trestle",
+  url: "https://prjvvl.github.io",
 
   social: {
-    github: "",
-    twitter: "",
-    linkedin: "",
+    github: "https://github.com/prjvvl",
+    linkedin: "https://www.linkedin.com/in/prjvvl",
+    instagram: "https://instagram.com/prjvvl",
+    leetcode: "https://leetcode.com/u/prjvvl",
+    email: "mailto:prjvvl@gmail.com",
   },
 
   nav: [
     { label: "Home", href: "/" },
+    { label: "Projects", href: "/projects" },
     { label: "Blog", href: "/blog" },
     { label: "About", href: "/about" },
   ],

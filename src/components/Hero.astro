@@ -2,9 +2,14 @@
 interface Props {
   title: string;
   subtitle?: string;
+  /** Reveals the title with a typewriter animation instead of rendering it
+   * statically. The text stays in the DOM the whole time (only visually
+   * clipped), so screen readers get the full title immediately regardless
+   * of animation state. */
+  typewriter?: boolean;
 }
 
-const { title, subtitle } = Astro.props;
+const { title, subtitle, typewriter = false } = Astro.props;
 ---
 
 <section class="relative overflow-hidden px-4 py-16 text-center md:py-24">
@@ -15,10 +20,52 @@ const { title, subtitle } = Astro.props;
   </div>
 
   <div class="mx-auto max-w-5xl">
-    <h1 class="text-3xl font-bold tracking-tight text-fg md:text-5xl">{title}</h1>
+    <h1
+      class="text-3xl font-bold tracking-tight text-fg md:text-5xl"
+      class:list={[{ typewriter }]}
+    >
+      {title}
+    </h1>
     {subtitle && <p class="mx-auto mt-4 max-w-2xl text-lg text-fg-muted">{subtitle}</p>}
     <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
       <slot />
     </div>
   </div>
 </section>
+
+{
+  typewriter && (
+    <style>
+      .typewriter {
+        display: inline-block;
+        border-right: 0.09em solid var(--color-brand);
+        animation:
+          typewriter-reveal 1.4s steps(24, end) forwards,
+          typewriter-caret 0.8s step-end infinite;
+      }
+
+      @keyframes typewriter-reveal {
+        from {
+          clip-path: inset(0 100% 0 0);
+        }
+        to {
+          clip-path: inset(0 0 0 0);
+        }
+      }
+
+      @keyframes typewriter-caret {
+        50% {
+          border-color: transparent;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .typewriter {
+          border-right: none;
+          animation: none;
+          clip-path: none;
+        }
+      }
+    </style>
+  )
+}

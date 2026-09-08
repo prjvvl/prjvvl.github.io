@@ -1,8 +1,28 @@
 ---
+import { Mail } from "@lucide/astro";
+import Linkedin from "./icons/Linkedin.astro";
+import Instagram from "./icons/Instagram.astro";
+import Leetcode from "./icons/Leetcode.astro";
 import { siteConfig } from "../site.config";
 
 const year = new Date().getFullYear();
-const socialLinks = Object.entries(siteConfig.social).filter(([, url]) => url);
+// GitHub lives in the nav instead (next to the theme toggle), so it's
+// excluded here to avoid showing the same link twice.
+const socialLinks = Object.entries(siteConfig.social).filter(([platform, url]) => url && platform !== "github");
+
+const icons = {
+  linkedin: Linkedin,
+  instagram: Instagram,
+  leetcode: Leetcode,
+  email: Mail,
+} as const;
+
+const labels: Record<keyof typeof icons, string> = {
+  linkedin: "LinkedIn",
+  instagram: "Instagram",
+  leetcode: "LeetCode",
+  email: "Email",
+};
 ---
 
 <footer class="border-t border-border bg-surface">
@@ -12,11 +32,23 @@ const socialLinks = Object.entries(siteConfig.social).filter(([, url]) => url);
     {
       socialLinks.length > 0 && (
         <div class="flex gap-4">
-          {socialLinks.map(([platform, url]) => (
-            <a href={url} class="text-sm text-fg-muted hover:text-fg" rel="me noopener noreferrer" target="_blank">
-              {platform}
-            </a>
-          ))}
+          {socialLinks.map(([platform, url]) => {
+            const key = platform as keyof typeof icons;
+            const Icon = icons[key];
+            const isEmail = key === "email";
+            return (
+              <a
+                href={url}
+                class="text-fg-muted hover:text-fg"
+                aria-label={labels[key]}
+                title={labels[key]}
+                rel={isEmail ? undefined : "me noopener noreferrer"}
+                target={isEmail ? undefined : "_blank"}
+              >
+                <Icon class="size-5" aria-hidden="true" />
+              </a>
+            );
+          })}
         </div>
       )
     }
