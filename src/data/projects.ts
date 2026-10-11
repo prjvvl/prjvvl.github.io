@@ -1,4 +1,4 @@
-import { Anchor, Wrench, Archive, Layers, Compass } from "@lucide/astro";
+import { Bot, Anchor, Wrench, Archive, Layers, Compass } from "@lucide/astro";
 import type { AstroComponent } from "@lucide/astro";
 
 /**
@@ -19,12 +19,12 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "anchor",
-    title: "Anchor",
-    description: "A personal dashboard: curated news feed plus tiered learning paths with progress tracking.",
-    href: "https://prjvvl.github.io/anchor/",
-    icon: Anchor,
-    repo: "prjvvl/anchor",
+    slug: "agen",
+    title: "Agen",
+    description: "An agent engine with Python, Node.js and Go SDKs, plus a platform to deploy, autoscale and manage agent fleets.",
+    href: "https://prjvvl.github.io/agen/",
+    icon: Bot,
+    repo: "prjvvl/agen",
     featured: true,
   },
   {
@@ -37,13 +37,21 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    slug: "anchor",
+    title: "Anchor",
+    description: "A personal dashboard: curated news feed plus tiered learning paths with progress tracking.",
+    href: "https://prjvvl.github.io/anchor/",
+    icon: Anchor,
+    repo: "prjvvl/anchor",
+    featured: true,
+  },
+  {
     slug: "stash",
     title: "Stash",
     description: "A lightweight file and snippet manager for stashing things you want to find again.",
     href: "https://prjvvl.github.io/stash/",
     icon: Archive,
     repo: "prjvvl/stash",
-    featured: true,
   },
   {
     slug: "trestle",
